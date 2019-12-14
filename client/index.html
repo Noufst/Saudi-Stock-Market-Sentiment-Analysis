@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="author" content="SemiColonWeb" />
+
+        <!-- Stylesheets
+============================================= -->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="style.css" type="text/css" />
+        <link rel="stylesheet" href="css/swiper.css" type="text/css" />
+        <link rel="stylesheet" href="css/dark.css" type="text/css" />
+        <link rel="stylesheet" href="css/font-icons.css" type="text/css" />
+        <link rel="stylesheet" href="css/animate.css" type="text/css" />
+        <link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
+
+        <link rel="stylesheet" href="css/responsive.css" type="text/css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Load jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i|Play+Fair:700" rel="stylesheet" type="text/css" />
+
+        <!-- Load Chart.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+        <script src="https://unpkg.com/chartjs-plugin-colorschemes@0.4.0/dist/chartjs-plugin-colorschemes.min.js"></script>
+
+        <!-- Load D3.js to read csv files -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.7/d3.min.js"></script>
+        <script src="https://d3js.org/d3.v4.js"></script>
+
+        <!-- Range Slider CSS -->
+        <link rel="stylesheet" href="css/components/ion.rangeslider.css" type="text/css" />
+        <!-- Bootstrap Switch CSS -->
+        <link rel="stylesheet" href="css/components/bs-switches.css" type="text/css" />
+        <!-- Radio Checkbox Plugin -->
+        <link rel="stylesheet" href="css/components/radio-checkbox.css" type="text/css" />
+
+        <!-- Document Title
+============================================= -->
+        <title>Saudi Stock Market | Sentiment Analysis</title>
+
+    </head>
+
+    <body class="stretched side-header">
+
+        <!-- Document Wrapper
+============================================= -->
+        <div id="wrapper" class="clearfix">
+
+            <!-- Header
+============================================= -->
+            <header id="header" class="no-sticky">
+
+                <div id="header-wrap">
+
+                    <div class="container clearfix">
+
+
+                        <!-- Primary Navigation
+============================================= -->
+                        <nav id="primary-menu" style="margin-top: 20px">
+
+                            <ul>
+                                <li><center><h3>Offline Data</h3></center></li>
+                                <li><center><button id="button_word_cloud" onclick="button_word_cloud_clicked()" class="button button-border button-rounded button-fill fill-from-bottom button-black"><span>Word Cloud</span></button></center>
+                                </li>
+                                <li><center><button id="button_offline_timeline" onclick="button_offline_timeline_clicked()" class="button button-border button-rounded button-fill fill-from-bottom button-black"><span>Timeline</span></button></center>
+                                </li>
+                                <li><center><button id="button_offline_sectors" onclick="button_offline_sectors_clicked()" class="button button-border button-rounded button-fill fill-from-bottom button-black"><span>Sectors</span></button></center>
+                                </li>
+                                <li><center><button id="button_offline_aramco" onclick="button_offline_aramco_clicked()" class="button button-border button-rounded button-fill fill-from-bottom button-black"><span>Aramco</span></button></center>
+                                </li>
+
+                                <div class="line"></div>
+
+                                <li><center><h3>Streaming Data</h3></center></li>
+                                <li><center><button id="button_online_timeline" onclick="button_online_timeline_clicked()" class="button button-border button-rounded button-fill fill-from-bottom button-black"><span>Timeline</span></button></center>
+                                </li>
+                                <li><center><button id="button_online_sectors" onclick="button_online_sectors_clicked()" class="button button-border button-rounded button-fill fill-from-bottom button-black"><span>Sectors</span></button></center>
+                                </li>
+                                <li><center><button id="button_online_aramco" onclick="button_online_aramco_clicked()" class="button button-border button-rounded button-fill fill-from-bottom button-black"><span>Aramco</span></button></center>
+                                </li>
+                            </ul>
+
+                        </nav><!-- #primary-menu end -->
+
+                    </div>
+
+                </div>
+
+            </header><!-- #header end -->
+
+            <section id="slider" class="slider-element slider-parallax swiper_wrapper full-screen clearfix">
+                <div class="slider-parallax-inner">
+
+                    <div class="swiper-container swiper-parent">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide dark" style="background-image: url('imgs/stocks1.jpeg');">
+                                <div class="container clearfix">
+                                    <div class="slider-caption slider-caption-center">
+                                        <h2 data-animate="fadeInUp">Saudi Stock Market</h2>
+                                        <p class="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">Sentiment Analysis</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- Content
+============================================= -->
+            <section id="content">
+
+                <div class="content-wrap" style="padding-bottom: 30px;">
+
+                    <div class="container clearfix">
+
+                        <!--  ======== OFFLINE ======== -->
+
+                        <!-- Word cloud -->
+
+                        <div id="offline_word_cloud">
+                            <center><h3>Word Cloud of Tweets in 2019</h3></center>
+                            <div class="col_half" style="text-align: center;">
+                                <img data-animate="fadeInLeft" class="image_fade" src="imgs/up_wordcloud.png" alt="Gallery Thumb 1" width="100%">
+                            </div>
+                            <div class="col_half col_last" style="text-align: center;">
+                                <img data-animate="fadeInRight" class="image_fade" src="imgs/down_wordcloud.png" alt="Gallery Thumb 1" width="100%">
+                            </div>
+                        </div>
+
+                        <!-- Timeline -->
+                        <div id="offline_timeline" style="display: none" data-animate="fadeInLeft">
+                            <center><h3>Number of Tweets Per Month in 2019</h3></center>
+                            <canvas id="chart-offline-timeline"></canvas>
+                            <div>
+                                <div class="white-section">
+                                    <input class="range_09" />
+                                    <br>
+                                    <center>
+                                        <button class="button button-border button-rounded button-fill fill-from-bottom button-black" onclick="doThing()"><span>Apply</span></button>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sectors -->
+                        <div id="offline_sectors" style="display: none" data-animate="fadeInLeft">
+                            <center><h3>Number of Tweets Per Sector in 2019</h3></center>
+                            <canvas id="chart-offline-sectors"></canvas>
+                        </div>
+
+                        <!-- aramco -->
+                        <div id="offline_aramco" style="display: none" data-animate="fadeInLeft">
+                            <center><h3>Aramco Shares Analysis in 2019</h3></center>
+                            <canvas id="chart-offline-aramco"></canvas>
+                            <div class="line"></div>
+                            <canvas id="chart-offline-aramco-timeline"></canvas>
+                            <div>
+                                <div class="white-section">
+                                    <input class="range_Aramco" />
+                                    <br>
+                                    <button class="button button-border button-rounded button-fill fill-from-bottom button-black" onclick="selectMonthAramco()">Apply</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--  ======== ONLINE ======== -->
+
+                        <!-- Timeline -->
+                        <div id="online_timeline" style="display: none" data-animate="fadeInLeft">
+                            <center><h3>Number of Real-time Tweets Per 10 Seconds</h3></center>
+                            <p id="timeline_date" style="font-size: 18px"></p>
+                            <canvas id="chart-online-timeline"></canvas>
+                        </div>
+
+                        <!-- Sectors -->
+                        <div id="online_sectors" style="display: none" data-animate="fadeInLeft">
+                            <center><h3>Number of Real-time Tweets Per Sector</h3></center>
+                            <p id="sectors_date" style="font-size: 18px"></p>
+                            <canvas id="chart-online-sectors"></canvas>
+                        </div>
+
+                        <!-- aramco -->
+                        <div id="online_aramco" style="display: none" data-animate="fadeInLeft">
+                            <center><h3>Real-time Aramco Shares Analysis</h3></center>
+                            <p id="aramco_date" style="font-size: 18px"></p>
+                            <canvas id="chart-online-aramco"></canvas>
+                        </div>
+
+
+
+                        <p id="demo"></p>
+
+                    </div>
+
+                </div>
+
+            </section><!-- #content end -->
+
+        </div><!-- #wrapper end -->
+
+
+        <!-- External JavaScripts
+============================================= -->
+        <script src="js/jquery.js"></script>
+        <script src="js/plugins.js"></script>
+
+        <!-- Footer Scripts
+============================================= -->
+        <script src="js/functions.js"></script>
+
+        <!-- Charts JS
+============================================= -->
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <script src="js/chart.js"></script>
+        <script src="js/chart-utils.js"></script>
+
+        <!-- Bootstrap Switch Plugin 
+============================================= -->
+        <script src="js/components/bs-switches.js"></script>
+
+        <!-- Range Slider Plugin 
+============================================= -->
+        <script src="js/components/rangeslider.min.js"></script>
+        <script src="js/components/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+        <script src="utils.js"></script>
+
+        <script src="https://unpkg.com/moment"></script>
+
+        <!-- Offline timeline chart ============================================= -->
+        <script src="js/script.js"></script>
+        <!-- Offline aramco timeline chart ============================================= -->
+        <script src="js/script_aramco_timeline.js"></script>
+
+        <!-- Offline sectors chart ============================================= -->
+        <script>
+
+            function draw_offline_sectors(){
+                $.get("http://localhost:5000/offline-sectors", function (jdata, status) {
+
+                    var names = []
+                    var pos = []
+                    var neg = []
+                    for(var i = 0; i < jdata.sectors.length; i++) {
+                        names.push(jdata.sectors[i].name);  
+                        pos.push(jdata.sectors[i].pos);  
+                        neg.push(jdata.sectors[i].neg);  
+                    }
+
+                    var color = Chart.helpers.color;
+                    Chart.defaults.global.defaultFontSize = 16;
+                    Chart.defaults.global.animation.duration = 5000
+                    var ctx = document.getElementById('chart-offline-sectors');
+                    var myChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: names,
+                            datasets: [{
+                                label: "Negative",
+                                backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                                borderColor: window.chartColors.red,
+                                pointBackgroundColor: window.chartColors.red,
+                                data: neg
+                            }, {
+                                label: "Positive",
+                                backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
+                                borderColor: window.chartColors.green,
+                                pointBackgroundColor: window.chartColors.green,
+                                data: pos
+                            },]
+                        },
+                        options: {
+                            legend: {
+                                position: 'top',
+                            },
+                            scale: {
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                pointLabels: {
+                                    fontSize: 16
+                                }
+                            }
+                        }
+                    });
+
+
+                    window.myRadar = myChart
+
+                });
+            }
+        </script>
+
+        <!-- Offline aramco chart ============================================= -->
+        <script>
+
+            function draw_offline_aramco() {
+                $.get("http://localhost:5000/offline-aramco", function (jdata, status) {
+                    var names = []
+                    var pos = []
+                    var neg = []
+                    for(var i = 0; i < jdata.sectors.length; i++) {
+                        names.push(jdata.sectors[i].name);  
+                        pos.push(jdata.sectors[i].pos);  
+                        neg.push(-jdata.sectors[i].neg);  
+                    }
+
+                    //document.getElementById("demo").innerHTML = neg;
+
+                    var color = Chart.helpers.color;
+                    var barChartData = {
+                        labels: names,
+                        datasets: [{
+                            label: 'Negative',
+                            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                            borderColor: window.chartColors.red,
+                            borderWidth: 1,
+                            data: neg
+                        }, {
+                            label: 'Positive',
+                            backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+                            borderColor: window.chartColors.green,
+                            borderWidth: 1,
+                            data: pos
+                        }]
+
+                    };
+
+
+                    var color = Chart.helpers.color;
+                    Chart.defaults.global.defaultFontSize = 16;
+                    Chart.defaults.global.animation.duration = 5000
+                    var ctx = document.getElementById('chart-offline-aramco');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: barChartData,
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            }
+                            /*,
+                            title: {
+                                display: true,
+                                text: 'Bar Chart'
+                            }*/
+                        }
+                    });
+
+
+                    window.myBar = myChart
+
+                });
+            }
+        </script>
+
+        <!-- Online sectors chart ============================================= -->
+        <script>
+
+            function draw_online_sectors(){
+
+                // Declare an EventSource
+                const eventSource = new EventSource('http://127.0.0.1:5000/online-sectors');
+
+                const date = moment();
+
+                //var d = Date(Date.now());
+                // Converting the number of millisecond in date string 
+                a = date.format('MMMM Do YYYY, h:mm:ss a'); 
+                // Printing the current date  
+                document.getElementById("sectors_date").innerHTML = "<b>Streamaing since:</b> " + a;
+
+                sec1_counter_pos = 0
+                sec1_counter_neg = 0
+                sec2_counter_pos = 0
+                sec2_counter_neg = 0
+                sec3_counter_pos = 0
+                sec3_counter_neg = 0
+                sec4_counter_pos = 0
+                sec4_counter_neg = 0
+                sec5_counter_pos = 0
+                sec5_counter_neg = 0
+                sec6_counter_pos = 0
+                sec6_counter_neg = 0
+                sec7_counter_pos = 0
+                sec7_counter_neg = 0
+
+                var pos = [sec1_counter_pos, sec2_counter_pos, sec3_counter_pos, sec4_counter_pos, sec5_counter_pos, sec6_counter_pos, sec7_counter_pos]
+                var neg = [sec1_counter_neg, sec2_counter_neg, sec3_counter_neg, sec4_counter_neg, sec5_counter_neg, sec6_counter_neg, sec7_counter_neg]
+
+                var color = Chart.helpers.color;
+                Chart.defaults.global.defaultFontSize = 16;
+                var ctx = document.getElementById('chart-online-sectors');
+                var myChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ["الإسمنت", "التأمين", "التجزئة", "الزراعة", "الإتصالات", "العقار", "البنوك"],
+                        datasets: [{
+                            label: "Negative",
+                            backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                            borderColor: window.chartColors.red,
+                            pointBackgroundColor: window.chartColors.red,
+                            data: null
+                        }, {
+                            label: "Positive",
+                            backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
+                            borderColor: window.chartColors.green,
+                            pointBackgroundColor: window.chartColors.green,
+                            data: null
+                        },]
+                    },
+                    options: {
+                        legend: {
+                            position: 'top',
+                        },
+                        scale: {
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            pointLabels: {
+                                fontSize: 16
+                            }
+                        }
+                    }
+                });
+
+
+                window.myRadar = myChart
+
+                // Handler for events 
+                eventSource.onmessage = (e) => {
+
+                    var data = JSON.parse(e.data);
+                    document.getElementById("sectors_tweet").innerHTML = data.tweet;
+
+                    if (data.sector == "الإسمنت" && data.sentiment == "1") {
+                        sec1_counter_pos = sec1_counter_pos + 1
+                    } else if (data.sector == "الإسمنت" && data.sentiment == "0") {
+                        sec1_counter_neg = sec1_counter_neg + 1
+                    } else if (data.sector == "التأمين" && data.sentiment == "1") {
+                        sec2_counter_pos = sec2_counter_pos + 1
+                    } else if (data.sector == "التأمين" && data.sentiment == "0") {
+                        sec2_counter_neg = sec2_counter_neg + 1
+                    } else if (data.sector == "التجزئة" && data.sentiment == "1") {
+                        sec3_counter_pos = sec3_counter_pos + 1
+                    } else if (data.sector == "التجزئة" && data.sentiment == "0") {
+                        sec3_counter_neg = sec3_counter_neg + 1
+                    } else if (data.sector == "الزراعة" && data.sentiment == "1") {
+                        sec4_counter_pos = sec4_counter_pos + 1
+                    } else if (data.sector == "الزراعة" && data.sentiment == "0") {
+                        sec4_counter_neg = sec4_counter_neg + 1
+                    } else if (data.sector == "الإتصالات" && data.sentiment == "1") {
+                        sec5_counter_pos = sec5_counter_pos + 1
+                    } else if (data.sector == "الإتصالات" && data.sentiment == "0") {
+                        sec5_counter_neg = sec5_counter_neg + 1
+                    } else if (data.sector == "العقار" && data.sentiment == "1") {
+                        sec6_counter_pos = sec6_counter_pos + 1
+                    } else if (data.sector == "العقار" && data.sentiment == "0") {
+                        sec6_counter_neg = sec6_counter_neg + 1
+                    } else if (data.sector == "البنوك" && data.sentiment == "1") {
+                        sec7_counter_pos = sec7_counter_pos + 1
+                    } else if (data.sector == "البنوك" && data.sentiment == "0") {
+                        sec7_counter_neg = sec7_counter_neg + 1
+                    } 
+
+                    var pos = [sec1_counter_pos, sec2_counter_pos, sec3_counter_pos, sec4_counter_pos, sec5_counter_pos, sec6_counter_pos, sec7_counter_pos]
+                    var neg = [sec1_counter_neg, sec2_counter_neg, sec3_counter_neg, sec4_counter_neg, sec5_counter_neg, sec6_counter_neg, sec7_counter_neg]
+
+                    myChart.data.datasets[0].data = neg
+                    myChart.data.datasets[1].data = pos
+                    myChart.update()
+                    //document.getElementById("demo").innerHTML = neg;
+
+
+                };
+
+
+            }
+        </script>
+
+        <!-- Online aramco chart ============================================= -->
+        <script>
+
+
+            function draw_online_aramco() {
+
+                // Declare an EventSource
+                const eventSource = new EventSource('http://127.0.0.1:5000/aramco-live');
+
+                const date = moment();
+
+                //var d = Date(Date.now());
+                // Converting the number of millisecond in date string 
+                a = date.format('MMMM Do YYYY, h:mm:ss a'); 
+                // Printing the current date  
+                document.getElementById("aramco_date").innerHTML = "<b>Streamaing since:</b> " + a;
+
+                sec1_counter_pos = 0
+                sec1_counter_neg = 0
+                sec2_counter_pos = 0
+                sec2_counter_neg = 0
+                sec3_counter_pos = 0
+                sec3_counter_neg = 0
+
+                var pos = [sec1_counter_pos, sec2_counter_pos, sec3_counter_pos]
+                var neg = [sec1_counter_neg, sec2_counter_neg, sec3_counter_neg]
+
+                var color = Chart.helpers.color;
+                var barChartData = {
+                    labels: ["أرامكو", "المؤشر العام", "أخرى"],
+                    datasets: [{
+                        label: 'Negative',
+                        backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                        borderColor: window.chartColors.red,
+                        borderWidth: 1,
+                        data: neg
+                    }, {
+                        label: 'Positive',
+                        backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+                        borderColor: window.chartColors.green,
+                        borderWidth: 1,
+                        data: pos
+                    }]
+
+                };
+
+
+                var color = Chart.helpers.color;
+                Chart.defaults.global.defaultFontSize = 14;
+                Chart.defaults.global.animation.duration = 0
+                var ctx = document.getElementById('chart-online-aramco');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: barChartData,
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        }
+                        /*,
+                            title: {
+                                display: true,
+                                text: 'Bar Chart'
+                            }*/
+                    }
+                });
+
+
+                window.myBar = myChart
+
+                // Handler for events 
+                eventSource.onmessage = (e) => {
+
+                    var data = JSON.parse(e.data);
+
+                    if (data.sector == "أرامكو" && data.sentiment == "1") {
+                        sec1_counter_pos = sec1_counter_pos + 1
+                    } else if (data.sector == "أرامكو" && data.sentiment == "0") {
+                        sec1_counter_neg = sec1_counter_neg + 1
+                    } else if (data.sector == "المؤشر العام" && data.sentiment == "1") {
+                        sec2_counter_pos = sec2_counter_pos + 1
+                    } else if (data.sector == "المؤشر العام" && data.sentiment == "0") {
+                        sec2_counter_neg = sec2_counter_neg + 1
+                    } else if (data.sector == "أخرى" && data.sentiment == "1") {
+                        sec3_counter_pos = sec3_counter_pos + 1
+                    } else if (data.sector == "أخرى" && data.sentiment == "0") {
+                        sec3_counter_neg = sec3_counter_neg + 1
+                    } 
+
+                    var pos = [sec1_counter_pos, sec2_counter_pos, sec3_counter_pos]
+                    var neg = [-sec1_counter_neg, -sec2_counter_neg, -sec3_counter_neg]
+
+                    myChart.data.datasets[0].data = neg
+                    myChart.data.datasets[1].data = pos
+                    myChart.update()
+                    //document.getElementById("demo").innerHTML = neg;
+
+
+                };
+            }
+        </script>
+
+        <!-- Online timeline chart ============================================= -->
+        <script src="js/stream.js"></script>
+
+        <!-- Buttons clicks handeling ============================================= -->
+        <script>
+
+            function button_word_cloud_clicked() {
+                enable_buttons();
+                hide_divs();
+                disable_button("button_word_cloud");
+                var word_cloud = document.getElementById("offline_word_cloud");
+                word_cloud.style.display = "block";
+            }
+
+            function button_offline_timeline_clicked() {
+                enable_buttons();
+                hide_divs();
+                disable_button("button_offline_timeline");
+                var offline_timeline = document.getElementById("offline_timeline");
+                offline_timeline.style.display = "block";
+            }
+
+            function button_offline_sectors_clicked() {
+                enable_buttons();
+                hide_divs();
+                draw_offline_sectors();
+                disable_button("button_offline_sectors");
+                var online_sectors = document.getElementById("offline_sectors");
+                online_sectors.style.display = "block";
+            }
+
+            function button_offline_aramco_clicked() {
+                enable_buttons();
+                hide_divs();
+                draw_offline_aramco();
+                disable_button("button_offline_aramco");
+                var offline_aramco = document.getElementById("offline_aramco");
+                offline_aramco.style.display = "block";
+            }
+
+            function button_online_sectors_clicked() {
+                enable_buttons();
+                hide_divs();
+                draw_online_sectors();
+                disable_button("button_online_sectors");
+                var online_sectors = document.getElementById("online_sectors");
+                online_sectors.style.display = "block";
+            }
+
+            function button_online_aramco_clicked() {
+                enable_buttons();
+                hide_divs();
+                draw_online_aramco();
+                disable_button("button_online_aramco");
+                var online_aramco = document.getElementById("online_aramco");
+                online_aramco.style.display = "block";
+            }
+
+            function button_online_timeline_clicked() {
+                enable_buttons();
+                hide_divs();
+                draw_online_timeline();
+                disable_button("button_online_timeline");
+                var online_timeline = document.getElementById("online_timeline");
+                online_timeline.style.display = "block";
+            }
+
+            function hide_divs() {
+                var word_cloud = document.getElementById("offline_word_cloud");
+                var offline_timeline = document.getElementById("offline_timeline");
+                var offline_sectors = document.getElementById("offline_sectors");
+                var offline_aramco = document.getElementById("offline_aramco");
+                var online_timeline = document.getElementById("online_timeline");
+                var online_sectors = document.getElementById("online_sectors");
+                var online_aramco = document.getElementById("online_aramco");
+                word_cloud.style.display = "none";
+                offline_timeline.style.display = "none";
+                offline_sectors.style.display = "none";
+                offline_aramco.style.display = "none";
+                online_timeline.style.display = "none";
+                online_sectors.style.display = "none";
+                online_aramco.style.display = "none";
+            }
+
+            function enable_buttons() {
+                enable_button("button_offline_timeline")
+                enable_button("button_word_cloud")
+                enable_button("button_offline_sectors")
+                enable_button("button_offline_aramco")
+                enable_button("button_online_timeline")
+                enable_button("button_online_sectors")
+                enable_button("button_online_aramco")
+            }
+
+            function disable_button(id) {
+                document.getElementById(id).disabled=true
+                document.getElementById(id).classList.remove('fill-from-bottom');
+                document.getElementById(id).classList.remove('button-border');
+                document.getElementById(id).classList.remove('button-fill');
+            }
+
+            function enable_button(id) {
+                document.getElementById(id).disabled=false
+                document.getElementById(id).classList.add('fill-from-bottom');
+                document.getElementById(id).classList.add('button-border');
+                document.getElementById(id).classList.add('button-fill');
+            }
+        </script>
+        <script>
+            $("#button_word_cloud").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#offline_word_cloud").offset().top},
+                                       'slow');
+            });
+            $("#button_offline_timeline").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#offline_timeline").offset().top},
+                                       'slow');
+            });
+            $("#button_offline_sectors").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#offline_sectors").offset().top},
+                                       'slow');
+            });
+            $("#button_offline_aramco").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#offline_aramco").offset().top},
+                                       'slow');
+            });
+            $("#button_online_timeline").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#online_timeline").offset().top},
+                                       'slow');
+            });
+            $("#button_online_sectors").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#online_sectors").offset().top},
+                                       'slow');
+            });
+            $("#button_online_aramco").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#online_aramco").offset().top},
+                                       'slow');
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $(".range_09").ionRangeSlider({
+                    grid: true,
+                    from: 12,
+                    values: [
+                        "Jan", "Feb", "Mar",
+                        "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep",
+                        "Oct", "Nov", "Dec","All"
+                    ]
+                });
+            });
+            function doThing(){
+                if (document.querySelector('.range_09').value=="All") {
+                    setToAll()
+                }else {
+                    $.get("http://localhost:5000/month?x="+document.querySelector('.range_09').value, function (gdata, status) {
+                        drawMonth( JSON.parse(gdata))
+                    });
+                }
+            }
+            $.get("http://localhost:5000/2d", function (gdata, status) {
+                bar( JSON.parse(gdata))
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $(".range_Aramco").ionRangeSlider({
+                    grid: true,
+                    from: 12,
+                    values: [
+                        "Jan", "Feb", "Mar",
+                        "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep",
+                        "Oct", "Nov", "Dec","All"
+                    ]
+                });
+            });
+            function selectMonthAramco(){
+                if (document.querySelector('.range_Aramco').value=="All") {
+                    setToAllAramco()
+                }else {
+                    $.get("http://localhost:5000/aramcoMonth?x="+document.querySelector('.range_Aramco').value, function (gdata, status) {
+                        drawMonthAramco( JSON.parse(gdata))
+                    });
+                }
+            }
+            $.get("http://localhost:5000/aramco", function (gdata, status) {
+                aramcoMonthes( JSON.parse(gdata))
+            });
+        </script>
+    </body>
+</html>
